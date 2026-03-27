@@ -12,15 +12,12 @@ import {APIProviderContext} from '../api-provider';
 
 import {MapEventProps, useMapEvents} from './use-map-events';
 import {useMapOptions} from './use-map-options';
-import {useApiLoadingStatus} from '../../hooks/use-api-loading-status';
-import {APILoadingStatus} from '../../libraries/api-loading-status';
 import {
   DeckGlCompatProps,
   useDeckGLCameraUpdate
 } from './use-deckgl-camera-update';
 import {toLatLngLiteral} from '../../libraries/lat-lng-utils';
 import {useMapCameraParams} from './use-map-camera-params';
-import {AuthFailureMessage} from './auth-failure-message';
 import {useMapInstance} from './use-map-instance';
 
 export interface GoogleMapsContextValue {
@@ -119,7 +116,6 @@ export type MapProps = PropsWithChildren<
 export const Map: FunctionComponent<MapProps> = (props: MapProps) => {
   const {children, id, className, style} = props;
   const context = useContext(APIProviderContext);
-  const loadingStatus = useApiLoadingStatus();
 
   if (!context) {
     throw new Error(
@@ -213,16 +209,6 @@ export const Map: FunctionComponent<MapProps> = (props: MapProps) => {
   );
 
   const contextValue: GoogleMapsContextValue = useMemo(() => ({map}), [map]);
-
-  if (loadingStatus === APILoadingStatus.AUTH_FAILURE) {
-    return (
-      <div
-        style={{position: 'relative', ...(className ? {} : combinedStyle)}}
-        className={className}>
-        <AuthFailureMessage />
-      </div>
-    );
-  }
 
   return (
     <div

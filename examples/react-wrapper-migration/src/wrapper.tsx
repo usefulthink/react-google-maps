@@ -8,6 +8,7 @@ import {APIProvider, useApiLoadingStatus} from '../../../src';
 import {APILoadingStatus, APIProviderProps} from '@vis.gl/react-google-maps';
 
 const statusMap = {
+  [APILoadingStatus.NOT_LOADED]: undefined,
   [APILoadingStatus.LOADING]: 'LOADING',
   [APILoadingStatus.LOADED]: 'SUCCESS',
   [APILoadingStatus.FAILED]: 'FAILURE'
